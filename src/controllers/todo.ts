@@ -20,7 +20,7 @@ class TodoController implements ITodoController{
     }
     async findById(req: Request, res: Response): Promise<Response>{
         return  this.todoService.findById(req.params.id)
-        .then((result) => { return { req, res, result } })
+        .then((result) => { res.status(200).jsonp(result) })
         .catch((err) => { return err })
     }
     async findAll(req: Request, res: Response): Promise<Response>{
@@ -30,12 +30,12 @@ class TodoController implements ITodoController{
     }
     async update(req: Request, res: Response):  Promise<Response>{
        return  this.todoService.update(req.body, req.params.id)
-       .then((result) => { return { req, res, result } })
+       .then((result) => { res.status(200).jsonp(result) })
        .catch((err) => { return err })
     }
     async delete(req: Request, res: Response): Promise<Response>{
         return  this.todoService.delete(req.params.id)
-        .then((result) => { return { req,res, result } })
+        .then((result) => { res.status(200).jsonp(result) })
         .catch((err) => { return err })
     }
 }

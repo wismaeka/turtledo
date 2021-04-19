@@ -6,7 +6,9 @@ import TodoService from "./services/todo";
 import TodoController from "./controllers/todo";
 import TodoRouter from "./router/todo";
 import IndexRoutes from "./router";
-
+import i18next from 'i18next'
+import middleware from 'i18next-http-middleware'
+import Backend from "i18next-fs-backend";
 class App {
     public app: Application
     private mongooseClient: Mongoose
@@ -18,6 +20,20 @@ class App {
         this.applyMiddleware()
         this.routes()
         this.connectDB()
+
+        i18next
+        .use(Backend)
+        .use(middleware.LanguageDetector)
+        .init({
+            // debug: true,
+            backend: {
+                loadPath: __dirname + '/locales/{{lng}}/{{ns}}.json'
+            },
+            fallbackLng: 'en',
+            preload: ['en', 'id']
+        })
+        .then((t) => console.log(t))
+        .catch((err) => console.log(err))
     }
 
     private connectDB():void {
@@ -39,6 +55,8 @@ class App {
     protected applyMiddleware(): void {
         this.app.use(json())
         this.app.use(urlencoded({ extended: true }))
+        this.app.use(middleware.handle(i18next, {}));
+        this.app.use(changeLanguange);
     }
 
     protected routes() {
@@ -55,3 +73,8 @@ const app = new App().app
 app.listen(process.env.PORT, () => {
     console.log('Port run on ' + process.env.PORT )
 })
+
+function changeLanguange(changeLanguange: any) {
+    throw new Error("Function not implemented.");
+}
+
