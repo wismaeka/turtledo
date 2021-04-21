@@ -7,6 +7,7 @@ class TodoRepository implements ITodoRepository{
     async create (todoEntity: TodoEntity): Promise<TodoEntity>{
        const todo_result : {[ k: string] : any } = await TodoModel.create({
             title: todoEntity.getTitle,
+            tag: todoEntity.getTag,
             description: todoEntity.getDesc,
             created_at: todoEntity.getCreated ?? new Date(),
             updated_at: todoEntity.getUpdated ?? new Date(),
@@ -25,6 +26,7 @@ class TodoRepository implements ITodoRepository{
                     return new TodoEntity({
                         id: e.id,
                         title: e.title,
+                        tag: e.tag,
                         description: e.description,
                         created_at: e.created_at ?? new Date,
                         updated_at: e.updated_at ??  new Date,
@@ -41,6 +43,7 @@ class TodoRepository implements ITodoRepository{
         return todo ? new TodoEntity ({
             id: todo.id,
             title: todo.title,
+            tag: todo.tag,
             description: todo.description,
             created_at: todo.created_at ?? new Date(),
             updated_at: todo.updated_at ?? new Date(),
@@ -53,6 +56,7 @@ class TodoRepository implements ITodoRepository{
             { _id: id },
             {
                 title: todoEntity.getTitle,
+                tags: todoEntity.getTag,
                 description: todoEntity.getDesc,
                 created_at: todoEntity.getCreated ?? new Date(),
                 updated_at: todoEntity.getUpdated ?? new Date(),

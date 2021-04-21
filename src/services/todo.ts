@@ -11,6 +11,7 @@ class TodoService implements ITodoServices{
         const todo_data: TodoEntity = new TodoEntity({
             title: todoEntity.getTitle(),
             description: todoEntity.getDescription(),
+            tag: todoEntity.getTag(),
             created_at:  new Date(),
             updated_at:  new Date(),
             deleted_at: null
@@ -20,7 +21,6 @@ class TodoService implements ITodoServices{
     }
     async findAll() : Promise<TodoEntity[]>{
     const todo_data = await this.todoRepository.findAll()
-    console.log(todo_data,">>>>> find all service")
     return todo_data
     }
     async findById(id: string) : Promise<TodoEntity | null>{

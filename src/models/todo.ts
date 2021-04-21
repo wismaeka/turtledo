@@ -3,6 +3,7 @@ import { model, Model, Schema, Document } from 'mongoose'
 export interface ITodo extends Document {
     title: string,
     description: string,
+    tag: string
     created_at?: Date | null;
     updated_at?: Date | null;
     deleted_at?: Date | null | undefined;
@@ -10,6 +11,7 @@ export interface ITodo extends Document {
 
 const TodoSchema: Schema = new Schema ({
     title: { type: String },
+    tag: { type: String },
     description: { type: String },
     created_at: { type: Date },
     updated_at: { type: Date },

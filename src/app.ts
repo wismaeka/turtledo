@@ -9,6 +9,7 @@ import IndexRoutes from "./router";
 import i18next from 'i18next'
 import middleware from 'i18next-http-middleware'
 import Backend from "i18next-fs-backend";
+import { changeLanguage } from './middlewares/i18next'
 class App {
     public app: Application
     private mongooseClient: Mongoose
@@ -30,7 +31,7 @@ class App {
                 loadPath: __dirname + '/locales/{{lng}}/{{ns}}.json'
             },
             fallbackLng: 'en',
-            preload: ['en', 'id']
+            preload: ['en', 'id', 'kr']
         })
         .then((t) => console.log(t))
         .catch((err) => console.log(err))
@@ -56,7 +57,7 @@ class App {
         this.app.use(json())
         this.app.use(urlencoded({ extended: true }))
         this.app.use(middleware.handle(i18next, {}));
-        this.app.use(changeLanguange);
+        this.app.use(changeLanguage);
     }
 
     protected routes() {
@@ -73,8 +74,3 @@ const app = new App().app
 app.listen(process.env.PORT, () => {
     console.log('Port run on ' + process.env.PORT )
 })
-
-function changeLanguange(changeLanguange: any) {
-    throw new Error("Function not implemented.");
-}
-

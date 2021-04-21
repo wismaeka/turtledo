@@ -8,14 +8,15 @@ class TodoController implements ITodoController{
         private todoService : TodoService
     ){}
     async create(req: Request, res: Response): Promise<Response>{
-        const { title, description } = req.body
+        const { title, description, tag } = req.body
         const todo_data = new CreateTodoRequest(
             title,
-            description
+            description,
+            tag
           );
         return this.todoService.create(todo_data)
         .then((result) => { 
-            return res.status(201).jsonp(result) })
+            return res.status(201).jsonp({ success: true }) })
         .catch((err) => { return err })
     }
     async findById(req: Request, res: Response): Promise<Response>{
@@ -25,7 +26,7 @@ class TodoController implements ITodoController{
     }
     async findAll(req: Request, res: Response): Promise<Response>{
         return  this.todoService.findAll()
-        .then((result) => { return res.status(200).jsonp(result.map((e) => e))})
+        .then((result) => { return res.status(200).jsonp(result.map((e) => e.toList(req.t)))})
         .catch((err) => { return err })
     }
     async update(req: Request, res: Response):  Promise<Response>{

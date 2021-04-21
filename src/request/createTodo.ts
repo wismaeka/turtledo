@@ -1,6 +1,7 @@
 export default class CreateTodoRequest {
     private title : string
     private description: string
+    private tag : string
     // private created_at: Date  = new Date()
     // private updated_at: Date  = new Date()
     // private deleted_at: Date | null | undefined
@@ -8,13 +9,15 @@ export default class CreateTodoRequest {
     constructor(
         title: string,
         description: string,
+        tag: string
         // created_at: Date = new Date(),
         // updated_at: Date = new Date(),
         // deleted_at: Date | null | undefined
         
     ){
         this.title = title,
-        this.description = description
+        this.description = description,
+        this.tag = tag
         // this.created_at = created_at,
         // this.updated_at = updated_at,
         // this.deleted_at = deleted_at
@@ -25,6 +28,9 @@ export default class CreateTodoRequest {
     }
     getDescription():string{
         return this.description
+    }    
+    getTag():string{
+        return this.tag
     }    
     // getCreatedAt(): Date {
     //     return this.created_at
